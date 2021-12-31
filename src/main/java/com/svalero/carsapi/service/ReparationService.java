@@ -12,6 +12,8 @@ import java.util.List;
 
 public interface ReparationService {
     List<Reparation> findAllReparations();
+    List<Reparation> findReparations(Car car, int cost);
+    List<Reparation> findReparations(Car car);
 
 
 

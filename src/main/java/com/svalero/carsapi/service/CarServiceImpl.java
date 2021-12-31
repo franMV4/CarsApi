@@ -30,13 +30,18 @@ public class CarServiceImpl implements CarService{
         return (List<Car>) carRepository.findAll();
     }
 
+    @Override
+    public Car findCar(long id) throws CarNotFoundException {
+        return carRepository.findById(id)
+                .orElseThrow(CarNotFoundException::new);
+    }
 
 
 
     @Override
     public Car addCar(CarDTO carDto) throws CarNotFoundException {
         User user = userRepository.findById(carDto.getUser())
-            .orElseThrow(CarNotFoundException::new);
+                .orElseThrow(CarNotFoundException::new);
 
         ModelMapper mapper = new ModelMapper();
         Car car = mapper.map(carDto, Car.class);

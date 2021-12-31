@@ -22,8 +22,7 @@ public class ReparationController {
 
     @Autowired
     private ReparationService reparationService;
-    @Autowired
-    private CarService carService;
+
 
 
 

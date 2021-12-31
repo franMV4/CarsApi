@@ -12,8 +12,9 @@ import java.util.List;
 @Repository
 public interface ReparationRepository  extends CrudRepository<Reparation, Long> {
 
-
     List<Reparation> findAll();
+    List<Reparation> findByCar(Car car);
+    List<Reparation> findByCarAndCost(Car car, int cost);
 
 
 

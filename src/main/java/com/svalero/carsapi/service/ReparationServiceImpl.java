@@ -37,6 +37,16 @@ public class ReparationServiceImpl implements ReparationService{
         return reparationRepository.findAll();
     }
 
+    @Override
+    public List<Reparation> findReparations(Car car, int cost) {
+        return reparationRepository.findByCarAndCost(car, cost);
+    }
+
+    @Override
+    public List<Reparation> findReparations(Car car) {
+        return reparationRepository.findByCar(car);
+    }
+
 
     @Override
     public Reparation addReparation(ReparationDTO reparationDto) throws ReparationNotFoundException {
