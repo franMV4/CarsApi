@@ -1,10 +1,14 @@
 package com.svalero.carsapi.domain;
 
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.persistence.*;
+import javax.validation.constraints.Positive;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -12,21 +16,23 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "garages")
+@Document(value = "garages")
 public class Garage {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    @Column
+    private String id;
+    @Field
+    @NotNull
     private String street;
-    @Column
+    @Field
     private String city;
-    @Column(name = "postal_code")
+    @Field(name = "postal_code")
     private String postalCode;
-    @Column
+    @Field
+    @NotNull
     private String owner;
-    @Column
+    @Field
+    @Positive
     private int capacity;
 
     @OneToMany(mappedBy = "garage")

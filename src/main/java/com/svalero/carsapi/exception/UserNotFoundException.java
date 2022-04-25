@@ -1,6 +1,6 @@
 package com.svalero.carsapi.exception;
 
-public class UserNotFoundException extends Throwable {
+public class UserNotFoundException extends Exception {
     private static final String DEFAULT_ERROR_MESSAGE = "User not found";
 
     public UserNotFoundException(String message) {

@@ -10,6 +10,8 @@ import com.svalero.carsapi.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 
@@ -20,39 +22,39 @@ public class UserServiceImpl implements UserService{
     private UserRepository userRepository;
 
     @Override
-    public List<User> findAllUsers() {
-        return (List<User>) userRepository.findAll();
+    public Flux<User> findAllUsers() {
+        return (Flux<User>) userRepository.findAll();
     }
 
     @Override
-    public User addUser (UserDTO userDto)  {
+    public Mono<User> addUser (UserDTO userDto)  {
     ModelMapper mapper = new ModelMapper();
         User user = mapper.map(userDto, User.class);
         return userRepository.save(user);}
 
     @Override
-    public User deleteUser(long id) throws UserNotFoundException {
-        User user = userRepository.findById(id)
-                .orElseThrow(UserNotFoundException::new);
-        userRepository.delete(user);
+    public Mono<User> deleteUser(long id) throws UserNotFoundException {
+        Mono<User> user = userRepository.findById(id)
+                .onErrorReturn(new User());
+        userRepository.delete(user.block());
         return user;
     }
 
     @Override
-    public User modifyUser(long id, User newUser) throws UserNotFoundException {
-        User user = userRepository.findById(id)
-                .orElseThrow(UserNotFoundException::new);
-        user.setName(newUser.getName());
+    public Mono<User> modifyUser(long id, User newUser) throws UserNotFoundException {
+        Mono<User> user = userRepository.findById(id)
+                .onErrorReturn(new User());
+        user.block().setName(newUser.getName());
 
-        return userRepository.save(user);
+        return userRepository.save(user.block());
     }
 
     @Override
-    public User patchUser(long id, String name) throws UserNotFoundException {
-        User user = userRepository.findById(id)
-                .orElseThrow(UserNotFoundException::new);
-        user.setName(name);
-        return userRepository.save(user);
+    public Mono<User> patchUser(long id, String name) throws UserNotFoundException {
+        Mono<User> user = userRepository.findById(id)
+                .onErrorReturn(new User());
+        user.block().setName(name);
+        return userRepository.save(user.block());
     }
 
 }

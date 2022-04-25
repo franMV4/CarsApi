@@ -1,11 +1,16 @@
 package com.svalero.carsapi.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.persistence.*;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 import java.awt.image.ImageProducer;
 import java.time.LocalDate;
 import java.util.List;
@@ -14,21 +19,24 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "cars")
+@Document(value = "cars")
 public class Car {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    @Column
+    private String id;
+    @Field
+    @NotNull
     private String brand;
-    @Column
+    @Field
+    @NotNull
     private String model;
-    @Column
+    @Field
     private String color;
-    @Column(name = "horse_power")
+    @Field(name = "horse_power")
+    @Positive
     private int horsePower;
-    @Column
+    @Field
+    @Positive
     private int seats;
 
     @OneToMany(mappedBy = "car")

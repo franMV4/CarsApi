@@ -1,11 +1,15 @@
 package com.svalero.carsapi.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -13,21 +17,23 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "users")
+@Document(value = "users")
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    @Column
+    private String id;
+    @Field
+    @NotNull
+    @Pattern(regexp = "[0-9]{8}[A-Z]")
     private String dni;
-    @Column
+    @Field
     private String name;
-    @Column
+    @Field
     private String surname;
-    @Column
+    @Field
+    @NotNull
     private String phone;
-    @Column
+    @Field
     private String adress;
 
     @OneToMany(mappedBy = "user")

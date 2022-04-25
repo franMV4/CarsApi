@@ -1,6 +1,6 @@
 package com.svalero.carsapi.exception;
 
-public class ReparationNotFoundException extends Throwable {
+public class ReparationNotFoundException extends Exception {
     private static final String DEFAULT_ERROR_MESSAGE = "Reparation not found";
 
     public ReparationNotFoundException(String message) {

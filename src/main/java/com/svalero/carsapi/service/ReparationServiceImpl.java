@@ -15,6 +15,8 @@ import com.svalero.carsapi.repository.ReparationRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 
@@ -33,58 +35,58 @@ public class ReparationServiceImpl implements ReparationService{
 
 
     @Override
-    public List<Reparation> findAllReparations() {
+    public Flux<Reparation> findAllReparations() {
         return reparationRepository.findAll();
     }
 
     @Override
-    public List<Reparation> findReparations(Car car, int cost) {
+    public Flux<Reparation> findReparations(Car car, int cost) {
         return reparationRepository.findByCarAndCost(car, cost);
     }
 
     @Override
-    public List<Reparation> findReparations(Car car) {
+    public Flux<Reparation> findReparations(Car car) {
         return reparationRepository.findByCar(car);
     }
 
 
     @Override
-    public Reparation addReparation(ReparationDTO reparationDto) throws ReparationNotFoundException {
-        Car car = carRepository.findById(reparationDto.getCar())
-                .orElseThrow(ReparationNotFoundException::new);
-        Garage garage = garageRepository.findById(reparationDto.getGarage())
-                .orElseThrow(ReparationNotFoundException::new);
+    public Mono<Reparation> addReparation(ReparationDTO reparationDto) throws ReparationNotFoundException {
+        Mono<Car> car = carRepository.findById(reparationDto.getCar())
+                .onErrorReturn(new Car());
+        Mono<Garage> garage = garageRepository.findById(reparationDto.getGarage())
+                .onErrorReturn(new Garage());
 
         ModelMapper mapper = new ModelMapper();
         Reparation reparation = mapper.map(reparationDto, Reparation.class);
 
-        reparation.setCar(car);
-        reparation.setGarage(garage);
+        reparation.setCar(car.block());
+        reparation.setGarage(garage.block());
         return reparationRepository.save(reparation);}
 
     @Override
-    public Reparation deleteReparation(long id) throws ReparationNotFoundException {
-        Reparation reparation = reparationRepository.findById(id)
-                .orElseThrow(ReparationNotFoundException::new);
-        reparationRepository.delete(reparation);
+    public Mono<Reparation> deleteReparation(long id) throws ReparationNotFoundException {
+        Mono<Reparation> reparation = reparationRepository.findById(id)
+                .onErrorReturn(new Reparation());
+        reparationRepository.delete(reparation.block());
         return reparation;
     }
 
     @Override
-    public Reparation modifyReparation(long id, Reparation newReparation) throws ReparationNotFoundException {
-        Reparation reparation = reparationRepository.findById(id)
-                .orElseThrow(ReparationNotFoundException::new);
-        reparation.setRepairedPart(newReparation.getRepairedPart());
+    public Mono<Reparation> modifyReparation(long id, Reparation newReparation) throws ReparationNotFoundException {
+        Mono<Reparation> reparation = reparationRepository.findById(id)
+                .onErrorReturn(new Reparation());
+        reparation.block().setRepairedPart(newReparation.getRepairedPart());
 
-        return reparationRepository.save(reparation);
+        return reparationRepository.save(reparation.block());
     }
 
     @Override
-    public Reparation patchReparation(long id, String repairedPart) throws ReparationNotFoundException {
-        Reparation reparation = reparationRepository.findById(id)
-                .orElseThrow(ReparationNotFoundException::new);
-        reparation.setRepairedPart(repairedPart);
-        return reparationRepository.save(reparation);
+    public Mono<Reparation> patchReparation(long id, String repairedPart) throws ReparationNotFoundException {
+        Mono<Reparation> reparation = reparationRepository.findById(id)
+                .onErrorReturn(new Reparation());
+        reparation.block().setRepairedPart(repairedPart);
+        return reparationRepository.save(reparation.block());
     }
 
 }

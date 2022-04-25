@@ -4,18 +4,21 @@ package com.svalero.carsapi.repository;
 
 import com.svalero.carsapi.domain.Car;
 import com.svalero.carsapi.domain.Reparation;
+import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import org.springframework.stereotype.Repository;
+import reactor.core.publisher.Flux;
 
 import java.util.List;
 
 @Repository
-public interface ReparationRepository  extends CrudRepository<Reparation, Long> {
+public interface ReparationRepository  extends ReactiveMongoRepository<Reparation, Long> {
 
 
-    List<Reparation> findAll();
-    List<Reparation> findByCar(Car car);
-    List<Reparation> findByCarAndCost(Car car, int cost);
+    Flux<Reparation> findAll();
+    Flux<Reparation> findByCar(Car car);
+    Flux<Reparation> findByCarAndCost(Car car, int cost);
 
 
 

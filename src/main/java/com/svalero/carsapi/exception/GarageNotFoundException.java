@@ -1,6 +1,6 @@
 package com.svalero.carsapi.exception;
 
-public class GarageNotFoundException extends Throwable {
+public class GarageNotFoundException extends Exception {
     private static final String DEFAULT_ERROR_MESSAGE = "Garage not found";
 
     public GarageNotFoundException(String message) {

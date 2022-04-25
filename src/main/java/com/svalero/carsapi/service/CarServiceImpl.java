@@ -11,6 +11,8 @@ import com.svalero.carsapi.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 
@@ -26,52 +28,49 @@ public class CarServiceImpl implements CarService{
     private ReparationRepository reparationRepository;
 
     @Override
-    public List<Car> findAllCars() {
-        return (List<Car>) carRepository.findAll();
+    public Flux<Car> findAllCars() {
+        return (Flux<Car>) carRepository.findAll();
     }
 
     @Override
-    public Car findCar(long id) throws CarNotFoundException {
+    public Mono<Car> findCar(long id) throws CarNotFoundException {
         return carRepository.findById(id)
-                .orElseThrow(CarNotFoundException::new);
+                .onErrorReturn(new Car());
     }
 
 
 
     @Override
-    public Car addCar(CarDTO carDto) throws CarNotFoundException {
-        User user = userRepository.findById(carDto.getUser())
-            .orElseThrow(CarNotFoundException::new);
+    public Mono<Car> addCar(CarDTO carDto) throws CarNotFoundException {
+        Mono<User> user = userRepository.findById(carDto.getUser()).onErrorReturn(new User());
 
         ModelMapper mapper = new ModelMapper();
         Car car = mapper.map(carDto, Car.class);
 
-        car.setUser(user);
+        car.setUser(user.block());
         return carRepository.save(car);}
 
     @Override
-    public Car deleteCar(long id) throws CarNotFoundException {
-        Car car = carRepository.findById(id)
-                .orElseThrow(CarNotFoundException::new);
-        carRepository.delete(car);
+    public Mono<Car> deleteCar(long id) throws CarNotFoundException {
+        Mono<Car> car = carRepository.findById(id).onErrorReturn(new Car());
+        carRepository.delete(car.block());
         return car;
     }
 
     @Override
-    public Car modifyCar(long id, Car newCar) throws CarNotFoundException {
-        Car car = carRepository.findById(id)
-                .orElseThrow(CarNotFoundException::new);
-        car.setBrand(newCar.getBrand());
+    public Mono<Car> modifyCar(long id, Car newCar) throws CarNotFoundException {
+        Mono<Car> car = carRepository.findById(id).onErrorReturn(new Car());
+        car.block().setBrand(newCar.getBrand());
 
-        return carRepository.save(car);
+        return carRepository.save(car.block());
     }
 
     @Override
-    public Car patchCar(long id, String brand) throws CarNotFoundException {
-        Car car = carRepository.findById(id)
-                .orElseThrow(CarNotFoundException::new);
-        car.setBrand(brand);
-        return carRepository.save(car);
+    public Mono<Car> patchCar(long id, String brand) throws CarNotFoundException {
+        Mono<Car> car = carRepository.findById(id)
+                .onErrorReturn(new Car());
+        car.block().setBrand(brand);
+        return carRepository.save(car.block());
     }
 
 
