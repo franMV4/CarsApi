@@ -1,0 +1,9 @@
+{
+  "id": 2,
+  "repairedPart": "faros y frenos",
+  "cost": 400,
+  "delivered": true,
+  "numeroMecanicos": 7,
+  "pickUpDate": "19-03-2021",
+  "dateOfDelivery": "25-03-2021"
+}

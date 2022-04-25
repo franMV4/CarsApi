@@ -1,0 +1,18 @@
+[
+  {
+    "id": 23,
+    "street": "Pablo Neruda",
+    "city": "Zaragoza",
+    "postalCode": "50018",
+    "owner": "Manolo Fernandez",
+    "capacity": 10
+  },
+  {
+    "id": 24,
+    "street": "Clara Campoamor",
+    "city": "Zaragoza",
+    "postalCode": "50018",
+    "owner": "Rodrigo Gomez",
+    "capacity": 7
+  }
+]

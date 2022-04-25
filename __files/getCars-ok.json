@@ -1,0 +1,18 @@
+[
+  {
+    "id": 23,
+    "brand": "opel",
+    "model": "corsa",
+    "color": "rojo",
+    "horsePower": 150,
+    "seats": 5
+  },
+  {
+    "id": 40,
+    "brand": "toyota",
+    "model": "prius",
+    "color": "verde",
+    "horsePower": 300,
+    "seats": 5
+  }
+]

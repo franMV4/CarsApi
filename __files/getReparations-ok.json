@@ -1,0 +1,20 @@
+[
+  {
+    "id": 23,
+    "repairedPart": "motor",
+    "cost": 250,
+    "delivered": true,
+    "numeroMecanicos": 3,
+    "pickUpDate": "09-11-2021",
+    "dateOfDelivery": "10-11-2021"
+  },
+  {
+  "id": 24,
+  "repairedPart": "faros y frenos",
+  "cost": 400,
+  "delivered": true,
+  "numeroMecanicos": 7,
+  "pickUpDate": "19-03-2021",
+  "dateOfDelivery": "25-03-2021"
+  }
+]

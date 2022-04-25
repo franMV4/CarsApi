@@ -1,0 +1,13 @@
+{
+  "request": {
+    "method": "PUT",
+    "urlPattern": "/reparation/([0-9]*)"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "bodyFileName": "reparation-ok.json"
+  }
+}

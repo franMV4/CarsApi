@@ -1,0 +1,14 @@
+{
+  "priority": 1,
+  "request": {
+    "method": "PUT",
+    "url": "/user/404"
+  },
+  "response": {
+    "status": 404,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "bodyFileName": "user-ko-404.json"
+  }
+}
