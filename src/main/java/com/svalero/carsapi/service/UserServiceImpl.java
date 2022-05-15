@@ -45,6 +45,11 @@ public class UserServiceImpl implements UserService{
         Mono<User> user = userRepository.findById(id)
                 .onErrorReturn(new User());
         user.block().setName(newUser.getName());
+        user.block().setDni(newUser.getDni());
+        user.block().setSurname(newUser.getSurname());
+        user.block().setPhone(newUser.getPhone());
+        user.block().setAdress(newUser.getAdress());
+
 
         return userRepository.save(user.block());
     }

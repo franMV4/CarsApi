@@ -75,7 +75,7 @@ public class GarageController {
 
     @ExceptionHandler(CarNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleGarageNotFoundException(GarageNotFoundException bnfe) {
-        ErrorResponse errorResponse = ErrorResponse.generalError(101, bnfe.getMessage());
+        ErrorResponse errorResponse = ErrorResponse.generalError(404, bnfe.getMessage());
         logger.error(bnfe.getMessage(), bnfe);
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }

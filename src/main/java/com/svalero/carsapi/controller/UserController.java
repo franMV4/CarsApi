@@ -72,7 +72,7 @@ public class UserController {
 
     @ExceptionHandler(CarNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleGarageNotFoundException(UserNotFoundException bnfe) {
-        ErrorResponse errorResponse = ErrorResponse.generalError(101, bnfe.getMessage());
+        ErrorResponse errorResponse = ErrorResponse.generalError(404, bnfe.getMessage());
         logger.error(bnfe.getMessage(), bnfe);
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }

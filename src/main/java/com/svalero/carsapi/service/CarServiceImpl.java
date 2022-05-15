@@ -61,6 +61,10 @@ public class CarServiceImpl implements CarService{
     public Mono<Car> modifyCar(long id, Car newCar) throws CarNotFoundException {
         Mono<Car> car = carRepository.findById(id).onErrorReturn(new Car());
         car.block().setBrand(newCar.getBrand());
+        car.block().setColor(newCar.getColor());
+        car.block().setModel(newCar.getModel());
+        car.block().setHorsePower(newCar.getHorsePower());
+        car.block().setSeats(newCar.getSeats());
 
         return carRepository.save(car.block());
     }

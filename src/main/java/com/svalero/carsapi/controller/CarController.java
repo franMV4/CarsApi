@@ -95,7 +95,7 @@ public class CarController {
 
     @ExceptionHandler(CarNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleCarNotFoundException(CarNotFoundException bnfe) {
-        ErrorResponse errorResponse = ErrorResponse.generalError(101, bnfe.getMessage());
+        ErrorResponse errorResponse = ErrorResponse.generalError(404, bnfe.getMessage());
         logger.error(bnfe.getMessage(), bnfe);
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
