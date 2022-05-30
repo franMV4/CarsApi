@@ -46,6 +46,10 @@ public class GarageServiceImpl implements GarageService {
         Mono<Garage> garage = garageRepository.findById(id)
                 .onErrorReturn(new Garage());
         garage.block().setPostalCode(newGarage.getPostalCode());
+        garage.block().setStreet(newGarage.getStreet());
+        garage.block().setCapacity(newGarage.getCapacity());
+        garage.block().setCity(newGarage.getCity());
+        garage.block().setOwner(newGarage.getOwner());
 
         return garageRepository.save(garage.block());
     }

@@ -77,6 +77,11 @@ public class ReparationServiceImpl implements ReparationService{
         Mono<Reparation> reparation = reparationRepository.findById(id)
                 .onErrorReturn(new Reparation());
         reparation.block().setRepairedPart(newReparation.getRepairedPart());
+        reparation.block().setCost(newReparation.getCost());
+        reparation.block().setDelivered(newReparation.isDelivered());
+        reparation.block().setNumeroMecanicos(newReparation.getNumeroMecanicos());
+        reparation.block().setPickUpDate(newReparation.getPickUpDate());
+        reparation.block().setDateOfDelivery(newReparation.getDateOfDelivery());
 
         return reparationRepository.save(reparation.block());
     }
